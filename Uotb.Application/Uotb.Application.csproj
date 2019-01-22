@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="People\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Uotb.Data\Uotb.Data.csproj" />
+    <ProjectReference Include="..\Uotb.Interfaces\Uotb.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
