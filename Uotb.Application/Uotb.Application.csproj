@@ -5,12 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="People\Queries\" />
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Uotb.Data\Uotb.Data.csproj" />
     <ProjectReference Include="..\Uotb.Interfaces\Uotb.Interfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Students\Queries\" />
   </ItemGroup>
 
 </Project>

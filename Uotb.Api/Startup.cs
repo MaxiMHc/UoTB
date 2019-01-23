@@ -16,6 +16,9 @@ using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Uotb.Data.Data;
 using Uotb.Interfaces.CQRS;
+using AutoMapper;
+using Uotb.Data.Entities;
+using Uotb.Application.Dtos;
 
 namespace Uotb.Api
 {
@@ -61,6 +64,15 @@ namespace Uotb.Api
                     TermsOfService = "None"
                 });
             });
+
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Person, PersonDto>();
+                cfg.CreateMap<PersonDto, Person>();
+            });
+
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
 
             ApplicationContainer = IocConfig.RegisterDependencies(services);
 

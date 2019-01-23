@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Uotb.Api.CQRS;
 using Uotb.Interfaces.CQRS;
+using Uotb.Application.People.Commands;
+using System.Reflection;
 
 namespace Uotb.Api
 {
@@ -14,17 +16,18 @@ namespace Uotb.Api
     {
         public static IContainer RegisterDependencies(IServiceCollection services)
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assembliesAppDomain = AppDomain.CurrentDomain.GetAssemblies();
+            var assembliesApplicationProject = typeof(CreatePerson).GetTypeInfo().Assembly;
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
             builder.RegisterType<CommandDispatcher>().As<ICommandDispatcher>().InstancePerLifetimeScope();
-            builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(ICommandHandler<>)).InstancePerLifetimeScope();
-            builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(ICommandHandler<,>)).InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(assembliesApplicationProject).AsClosedTypesOf(typeof(ICommandHandler<>)).InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(assembliesApplicationProject).AsClosedTypesOf(typeof(ICommandHandler<,>)).InstancePerLifetimeScope();
 
             builder.RegisterType<QueryDispatcher>().As<IQueryDispatcher>().InstancePerRequest().InstancePerLifetimeScope();
-            builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(IQueryHandler<,>)).InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(assembliesApplicationProject).AsClosedTypesOf(typeof(IQueryHandler<,>)).InstancePerLifetimeScope();
 
             //builder.RegisterType<Eshop.Data.DataContext>().As<IEntitiesContext>().InstancePerLifetimeScope();
             //builder.RegisterType<Eshop.Data.DataContext>().As<DbContext>().InstancePerLifetimeScope();
