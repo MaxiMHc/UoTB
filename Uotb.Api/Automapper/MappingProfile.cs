@@ -46,6 +46,13 @@ namespace Uotb.Api.Automapper
             CreateMap<Semester, SubjectDto>();
             CreateMap<Person, SubjectDto>();
             CreateMap<Faculty, SubjectDto>().ForMember(x => x.Name, opt => opt.Ignore());
+
+            CreateMap<Class, ClassDto>();
+            CreateMap<ClassDto, Class>();
+            CreateMap<Person, ClassDto>().ForMember(x => x.Id, opt => opt.Ignore());
+
+            CreateMap<Semester, StudentFacultyDto>();
+            CreateMap<Faculty, StudentFacultyDto>();
         }
     }
 }

@@ -10,13 +10,13 @@ using Uotb.Data.Entities;
 using Uotb.Interfaces.CQRS;
 using Microsoft.EntityFrameworkCore;
 
-namespace Uotb.Application.Subjects.Commands
+namespace Uotb.Application.Classes.Commands
 {
-    public class CreateSubject
+    public class CreateClass
     {
         public class Command : ICommand
         {
-            public SubjectDto subject;
+            public ClassDto classdto;
         }
 
         public class Handler : ICommandHandler<Command>
@@ -30,20 +30,17 @@ namespace Uotb.Application.Subjects.Commands
                 _mapper = mapper;
             }
 
-            // name, 3 ids
+            // name, 2 ids
             public async Task Execute(Command command)
             {
-                Subject subject = _mapper.Map<Subject>(command.subject);
+                Class c = _mapper.Map<Class>(command.classdto);
+                Lecturer lecturer = await _context.Lecturers.FirstOrDefaultAsync(x => x.Id == command.classdto.LecturerId);
+                Subject subject = await _context.Subjects.FirstOrDefaultAsync(x => x.Id == command.classdto.SubjectId);
 
-                Lecturer lecturer = await _context.Lecturers.FirstOrDefaultAsync(x => x.Id == command.subject.OwnerId);
-                Faculty faculty = await _context.Faculties.FirstOrDefaultAsync(x => x.Id == command.subject.FacultyId);
-                Semester semester = await _context.Semesters.FirstOrDefaultAsync(x => x.Id == command.subject.SemesterId);
+                c.Subject = subject;
+                c.Lecturer = lecturer;
 
-                subject.Semester = semester;
-                subject.Faculty = faculty;
-                subject.Owner = lecturer;
-
-                await _context.Subjects.AddAsync(subject);
+                await _context.Classes.AddAsync(c);
 
                 await _context.SaveChangesAsync();
             }

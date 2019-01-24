@@ -47,6 +47,24 @@ namespace Uotb.Api.Controllers
             });
         }
 
+        [HttpGet("student/{id}/classes")]
+        public async Task<List<ClassDto>> GetClasses(int id)
+        {
+            return await _queryDispatcher.Dispatch<GetAllStudentClasses.Query, List<ClassDto>>(new GetAllStudentClasses.Query
+            {
+                id = id
+            });
+        }
+
+        [HttpGet("student/{id}/semesters")]
+        public async Task<List<StudentFacultyDto>> GetSemesters(int id)
+        {
+            return await _queryDispatcher.Dispatch<GetAllStudentSemesters.Query, List<StudentFacultyDto>>(new GetAllStudentSemesters.Query
+            {
+                id = id
+            });
+        }
+
         // id, value, name, subjectid
         [HttpPost("student/{id}/addmark")]
         public async Task AddMark(int id, [FromBody] MarkDto mark)
@@ -58,7 +76,28 @@ namespace Uotb.Api.Controllers
             });
         }
 
-        [HttpPost("student")]
+        [HttpPost("student/{id}/assignclass")]
+        public async Task AddClass(int id, int classid)
+        {
+            await _commandDispatcher.Dispatch<AssignClass.Command>(new AssignClass.Command
+            {
+                id = id,
+                classId = classid
+            });
+        }
+
+        [HttpPost("student/{id}/assignsemester")]
+        public async Task AddSemester(int id, int facultyId, int semesterId)
+        {
+            await _commandDispatcher.Dispatch<AssignSemester.Command>(new AssignSemester.Command
+            {
+                id = id,
+                facultyId = facultyId,
+                semestrId = semesterId
+            });
+        }
+
+        [HttpPost("student")]   
         public async Task Create([FromBody] StudentDto student)
         {
             await _commandDispatcher.Dispatch<CreateStudent.Command>(new CreateStudent.Command()
