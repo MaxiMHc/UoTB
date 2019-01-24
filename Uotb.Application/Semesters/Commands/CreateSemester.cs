@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Uotb.Application.Dtos;
 using Uotb.Data.Data;
 using Uotb.Data.Entities;
 using Uotb.Interfaces.CQRS;
 
-namespace Uotb.Application.Students.Commands
+namespace Uotb.Application.Semesters.Commands
 {
-    public class CreateStudent
+    public class CreateSemester
     {
         public class Command : ICommand
         {
-            public StudentDto student;
+            public SemesterDto semester;
         }
 
         public class Handler : ICommandHandler<Command>
@@ -31,13 +31,7 @@ namespace Uotb.Application.Students.Commands
 
             public async Task Execute(Command command)
             {
-                Person person = _mapper.Map<Person>(command.student);
-                Student student = _mapper.Map<Student>(command.student);
-                student.Person = person;
-                int index = _context.Students.LastOrDefault()?.IndexNumber + 1 ?? 1;
-                student.IndexNumber = index;
-                await _context.Students.AddAsync(student);
-
+                await _context.Semesters.AddAsync(_mapper.Map<Semester>(command.semester));
                 await _context.SaveChangesAsync();
             }
         }

@@ -2,20 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
 using System.Threading.Tasks;
 using Uotb.Application.Dtos;
 using Uotb.Data.Data;
-using Uotb.Data.Entities;
 using Uotb.Interfaces.CQRS;
+using Uotb.Data.Entities;
 
-namespace Uotb.Application.Students.Commands
+namespace Uotb.Application.MarkTypes.Commands
 {
-    public class CreateStudent
+    public class CreateMarkType
     {
         public class Command : ICommand
         {
-            public StudentDto student;
+            public MarkTypeDto marktype;
         }
 
         public class Handler : ICommandHandler<Command>
@@ -31,13 +30,7 @@ namespace Uotb.Application.Students.Commands
 
             public async Task Execute(Command command)
             {
-                Person person = _mapper.Map<Person>(command.student);
-                Student student = _mapper.Map<Student>(command.student);
-                student.Person = person;
-                int index = _context.Students.LastOrDefault()?.IndexNumber + 1 ?? 1;
-                student.IndexNumber = index;
-                await _context.Students.AddAsync(student);
-
+                await _context.MarkTypes.AddAsync(_mapper.Map<MarkType>(command.marktype));
                 await _context.SaveChangesAsync();
             }
         }

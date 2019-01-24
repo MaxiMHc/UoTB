@@ -19,6 +19,7 @@ using Uotb.Interfaces.CQRS;
 using AutoMapper;
 using Uotb.Data.Entities;
 using Uotb.Application.Dtos;
+using Uotb.Api.Automapper;
 
 namespace Uotb.Api
 {
@@ -67,8 +68,7 @@ namespace Uotb.Api
 
             var config = new AutoMapper.MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Person, PersonDto>();
-                cfg.CreateMap<PersonDto, Person>();
+                cfg.AddProfile<MappingProfile>();
             });
 
             var mapper = config.CreateMapper();

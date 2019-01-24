@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Uotb.Application.Dtos;
 using Uotb.Application.Students.Commands;
+using Uotb.Application.Students.Queries;
+using Uotb.Data.Entities;
 using Uotb.Interfaces.CQRS;
 
 namespace Uotb.Api.Controllers
@@ -21,7 +23,20 @@ namespace Uotb.Api.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        // TODO: tu error z automappera
+        [HttpGet("students")]
+        public async Task<List<StudentDto>> GetAllStudents()
+        {
+            return await _queryDispatcher.Dispatch<GetAllStudents.Query, List<StudentDto>>(new GetAllStudents.Query());
+        }
+
+        [HttpGet("student/{id}")]
+        public async Task<Student> GetStudent(int id)
+        {
+            return await _queryDispatcher.Dispatch<GetStudent.Query, Student>(new GetStudent.Query
+            {
+                id = id
+            });
+        }
 
         [HttpPost("student")]
         public async Task Create([FromBody] StudentDto student)

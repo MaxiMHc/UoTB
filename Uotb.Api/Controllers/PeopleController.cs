@@ -36,7 +36,7 @@ namespace Uotb.Api.Controllers
             });
         }
 
-        [HttpGet("person/all")]
+        [HttpGet("people")]
         public async Task<List<PersonDto>> GetAll()
         {
             return await _queryDispatcher.Dispatch<GetAllPeople.Query, List<PersonDto>>(new GetAllPeople.Query());

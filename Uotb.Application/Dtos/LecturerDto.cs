@@ -4,10 +4,16 @@ using System.Text;
 
 namespace Uotb.Application.Dtos
 {
-    public class StudentDto
+    public class LecturerDto
     {
         public int Id { get; set; }
-        public int IndexNumber { get; set; }
+
+        public string Degree { get; set; }
+
+        public DateTime EmploymentDate { get; set; }
+
+        public string FacultyName { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }

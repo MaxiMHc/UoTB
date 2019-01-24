@@ -8,14 +8,15 @@ using Uotb.Application.Dtos;
 using Uotb.Data.Data;
 using Uotb.Data.Entities;
 using Uotb.Interfaces.CQRS;
+using Microsoft.EntityFrameworkCore;
 
-namespace Uotb.Application.Students.Commands
+namespace Uotb.Application.Lecturers.Commands
 {
-    public class CreateStudent
+    public class CreateLecturer
     {
         public class Command : ICommand
         {
-            public StudentDto student;
+            public LecturerDto lecturer;
         }
 
         public class Handler : ICommandHandler<Command>
@@ -31,12 +32,18 @@ namespace Uotb.Application.Students.Commands
 
             public async Task Execute(Command command)
             {
-                Person person = _mapper.Map<Person>(command.student);
-                Student student = _mapper.Map<Student>(command.student);
-                student.Person = person;
-                int index = _context.Students.LastOrDefault()?.IndexNumber + 1 ?? 1;
-                student.IndexNumber = index;
-                await _context.Students.AddAsync(student);
+                Person person = _mapper.Map<Person>(command.lecturer);
+                Employee employee = _mapper.Map<Employee>(command.lecturer);
+                Lecturer lecturer = _mapper.Map<Lecturer>(command.lecturer);
+
+                lecturer.Employee = employee;
+                employee.Person = person;
+
+                Faculty faculty = await _context.Faculties.FirstOrDefaultAsync(x => x.Name == command.lecturer.FacultyName);
+
+                employee.Faculty = faculty;
+
+                await _context.Lecturers.AddAsync(lecturer);
 
                 await _context.SaveChangesAsync();
             }
