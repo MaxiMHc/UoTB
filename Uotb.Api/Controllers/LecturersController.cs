@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Uotb.Application.Dtos;
 using Uotb.Application.Lecturers.Commands;
+using Uotb.Application.Lecturers.Queries;
 using Uotb.Data.Entities;
 using Uotb.Interfaces.CQRS;
 
@@ -20,6 +21,12 @@ namespace Uotb.Api.Controllers
         {
             _queryDispatcher = queryDispatcher;
             _commandDispatcher = commandDispatcher;
+        }
+
+        [HttpGet("lecturers")]
+        public async Task<List<LecturerDto>> GetAll()
+        {
+            return await _queryDispatcher.Dispatch<GetAllLecturers.Query, List<LecturerDto>>(new GetAllLecturers.Query());
         }
 
         [HttpPost("lecturer")]

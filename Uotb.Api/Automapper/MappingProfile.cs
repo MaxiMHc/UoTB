@@ -33,6 +33,10 @@ namespace Uotb.Api.Automapper
             CreateMap<LecturerDto, Lecturer>();
             CreateMap<LecturerDto, Person>();
             CreateMap<LecturerDto, Employee>();
+            CreateMap<Lecturer, LecturerDto>();
+            CreateMap<Person, LecturerDto>();
+            CreateMap<Employee, LecturerDto>();
+
         }
     }
 }

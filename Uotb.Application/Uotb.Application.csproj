@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UseNETCoreGenerator>true</UseNETCoreGenerator>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,10 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Uotb.Data\Uotb.Data.csproj" />
     <ProjectReference Include="..\Uotb.Interfaces\Uotb.Interfaces.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Lecturers\Queries\" />
   </ItemGroup>
 
 </Project>
