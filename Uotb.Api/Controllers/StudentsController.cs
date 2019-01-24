@@ -38,6 +38,26 @@ namespace Uotb.Api.Controllers
             });
         }
 
+        [HttpGet("student/{id}/marks")]
+        public async Task<List<MarkDto>> GetMarks(int id)
+        {
+            return await _queryDispatcher.Dispatch<GetAllStudentMarks.Query, List<MarkDto>>(new GetAllStudentMarks.Query
+            {
+                id = id
+            });
+        }
+
+        // id, value, name, subjectid
+        [HttpPost("student/{id}/addmark")]
+        public async Task AddMark(int id, [FromBody] MarkDto mark)
+        {
+            await _commandDispatcher.Dispatch<AddMarkToStudent.Command>(new AddMarkToStudent.Command
+            {
+                id = id,
+                mark = mark
+            });
+        }
+
         [HttpPost("student")]
         public async Task Create([FromBody] StudentDto student)
         {

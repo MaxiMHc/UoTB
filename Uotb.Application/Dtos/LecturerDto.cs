@@ -12,6 +12,7 @@ namespace Uotb.Application.Dtos
 
         public DateTime EmploymentDate { get; set; }
 
+        public int FacultyId { get; set; }
         public string FacultyName { get; set; }
 
         public string FirstName { get; set; }

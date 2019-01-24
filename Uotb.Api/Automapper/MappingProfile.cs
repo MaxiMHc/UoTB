@@ -26,6 +26,10 @@ namespace Uotb.Api.Automapper
             CreateMap<MarkType, MarkTypeDto>();
             CreateMap<MarkTypeDto, MarkType>();
 
+            CreateMap<MarkType, MarkDto>();
+            CreateMap<Mark, MarkDto>();
+            CreateMap<MarkDto, Mark>();
+
             CreateMap<Faculty, FacultyDto>();
             CreateMap<FacultyDto, Faculty>();
 
@@ -37,6 +41,11 @@ namespace Uotb.Api.Automapper
             CreateMap<Person, LecturerDto>();
             CreateMap<Employee, LecturerDto>();
 
+            CreateMap<Subject, SubjectDto>();
+            CreateMap<SubjectDto, Subject>();
+            CreateMap<Semester, SubjectDto>();
+            CreateMap<Person, SubjectDto>();
+            CreateMap<Faculty, SubjectDto>().ForMember(x => x.Name, opt => opt.Ignore());
         }
     }
 }
