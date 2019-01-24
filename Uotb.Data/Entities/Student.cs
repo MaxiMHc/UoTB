@@ -6,6 +6,7 @@ namespace Uotb.Data.Entities
 {
     public class Student : BaseEntity<int>
     {
+        // public int PersonId { get; set; }
         public virtual Person Person { get; set; }
         public int IndexNumber { get; set; }
         public virtual ICollection<StudentClasses> StudentClasses { get; set; }

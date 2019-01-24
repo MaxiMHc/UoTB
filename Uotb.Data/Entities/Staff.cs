@@ -7,6 +7,7 @@ namespace Uotb.Data.Entities
     public class Staff : BaseEntity<int>
     {
         public string Role { get; set; }
+        public int EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
     }
 }
