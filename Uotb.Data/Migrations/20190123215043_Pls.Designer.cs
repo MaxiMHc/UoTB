@@ -10,14 +10,14 @@ using Uotb.Data.Data;
 namespace Uotb.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181129005543_Init")]
-    partial class Init
+    [Migration("20190123215043_Pls")]
+    partial class Pls
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -27,11 +27,11 @@ namespace Uotb.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("LecturerId");
+                    b.Property<int>("LecturerId");
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("SubjectId");
+                    b.Property<int>("SubjectId");
 
                     b.HasKey("Id");
 
@@ -50,9 +50,9 @@ namespace Uotb.Data.Migrations
 
                     b.Property<DateTime>("EmploymentDate");
 
-                    b.Property<int?>("FacultyId");
+                    b.Property<int>("FacultyId");
 
-                    b.Property<int?>("PersonId");
+                    b.Property<int>("PersonId");
 
                     b.HasKey("Id");
 
@@ -88,7 +88,7 @@ namespace Uotb.Data.Migrations
 
                     b.Property<string>("Degree");
 
-                    b.Property<int?>("EmployeeId");
+                    b.Property<int>("EmployeeId");
 
                     b.HasKey("Id");
 
@@ -103,11 +103,11 @@ namespace Uotb.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("MarkTypeId");
+                    b.Property<int>("MarkTypeId");
 
-                    b.Property<int?>("StudentId");
+                    b.Property<int>("StudentId");
 
-                    b.Property<int?>("SubjectId");
+                    b.Property<int>("SubjectId");
 
                     b.Property<int>("Value");
 
@@ -175,7 +175,7 @@ namespace Uotb.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("EmployeeId");
+                    b.Property<int>("EmployeeId");
 
                     b.Property<string>("Role");
 
@@ -209,9 +209,9 @@ namespace Uotb.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClassId");
+                    b.Property<int>("ClassId");
 
-                    b.Property<int?>("StudentId");
+                    b.Property<int>("StudentId");
 
                     b.HasKey("Id");
 
@@ -228,11 +228,11 @@ namespace Uotb.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("FacultyId");
+                    b.Property<int>("FacultyId");
 
-                    b.Property<int?>("SemesterId");
+                    b.Property<int>("SemesterId");
 
-                    b.Property<int?>("StudentId");
+                    b.Property<int>("StudentId");
 
                     b.HasKey("Id");
 
@@ -274,51 +274,60 @@ namespace Uotb.Data.Migrations
                 {
                     b.HasOne("Uotb.Data.Entities.Lecturer", "Lecturer")
                         .WithMany("Classes")
-                        .HasForeignKey("LecturerId");
+                        .HasForeignKey("LecturerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Uotb.Data.Entities.Subject", "Subject")
                         .WithMany("Classes")
-                        .HasForeignKey("SubjectId");
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Uotb.Data.Entities.Employee", b =>
                 {
                     b.HasOne("Uotb.Data.Entities.Faculty", "Faculty")
                         .WithMany("Employees")
-                        .HasForeignKey("FacultyId");
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Uotb.Data.Entities.Person", "Person")
                         .WithMany("Employees")
-                        .HasForeignKey("PersonId");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Uotb.Data.Entities.Lecturer", b =>
                 {
                     b.HasOne("Uotb.Data.Entities.Employee", "Employee")
                         .WithMany("Lecturers")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Uotb.Data.Entities.Mark", b =>
                 {
                     b.HasOne("Uotb.Data.Entities.MarkType", "MarkType")
                         .WithMany("Marks")
-                        .HasForeignKey("MarkTypeId");
+                        .HasForeignKey("MarkTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Uotb.Data.Entities.Student", "Student")
                         .WithMany("Marks")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Uotb.Data.Entities.Subject", "Subject")
                         .WithMany("Marks")
-                        .HasForeignKey("SubjectId");
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Uotb.Data.Entities.Staff", b =>
                 {
                     b.HasOne("Uotb.Data.Entities.Employee", "Employee")
                         .WithMany("Staff")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Uotb.Data.Entities.Student", b =>
@@ -332,26 +341,31 @@ namespace Uotb.Data.Migrations
                 {
                     b.HasOne("Uotb.Data.Entities.Class", "Class")
                         .WithMany("StudentClasses")
-                        .HasForeignKey("ClassId");
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Uotb.Data.Entities.Student", "Student")
                         .WithMany("StudentClasses")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Uotb.Data.Entities.StudentFaculties", b =>
                 {
                     b.HasOne("Uotb.Data.Entities.Faculty", "Faculty")
                         .WithMany("StudentFaculties")
-                        .HasForeignKey("FacultyId");
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Uotb.Data.Entities.Semester", "Semester")
                         .WithMany("StudentFaculties")
-                        .HasForeignKey("SemesterId");
+                        .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Uotb.Data.Entities.Student", "Student")
                         .WithMany("StudentFaculties")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Uotb.Data.Entities.Subject", b =>
