@@ -37,15 +37,14 @@ namespace Uotb.Api.Automapper
             CreateMap<LecturerDto, Lecturer>();
             CreateMap<LecturerDto, Person>();
             CreateMap<LecturerDto, Employee>();
-            CreateMap<Lecturer, LecturerDto>();
-            CreateMap<Person, LecturerDto>();
-            CreateMap<Employee, LecturerDto>();
+            CreateMap<Person, LecturerDto>().ForMember(x => x.Id, opt => opt.Ignore());
+            CreateMap<Employee, LecturerDto>().ForMember(x => x.Id, opt => opt.Ignore());
 
             CreateMap<Subject, SubjectDto>();
             CreateMap<SubjectDto, Subject>();
-            CreateMap<Semester, SubjectDto>();
-            CreateMap<Person, SubjectDto>();
-            CreateMap<Faculty, SubjectDto>().ForMember(x => x.Name, opt => opt.Ignore());
+            CreateMap<Semester, SubjectDto>().ForMember(x => x.Id, opt => opt.Ignore());
+            CreateMap<Person, SubjectDto>().ForMember(x => x.Id, opt => opt.Ignore());
+            CreateMap<Faculty, SubjectDto>().ForMember(x => x.Name, opt => opt.Ignore()).ForMember(x => x.Id, opt => opt.Ignore());
 
             CreateMap<Class, ClassDto>();
             CreateMap<ClassDto, Class>();
@@ -53,6 +52,14 @@ namespace Uotb.Api.Automapper
 
             CreateMap<Semester, StudentFacultyDto>();
             CreateMap<Faculty, StudentFacultyDto>();
+
+            CreateMap<Staff, StaffDto>();
+            CreateMap<StaffDto, Staff>();
+            CreateMap<Person, StaffDto>().ForMember(x => x.Id, opt => opt.Ignore());
+            CreateMap<Employee, StaffDto>().ForMember(x => x.Id, opt => opt.Ignore());
+
+            CreateMap<StaffDto, Person>();
+            CreateMap<StaffDto, Employee>();
         }
     }
 }

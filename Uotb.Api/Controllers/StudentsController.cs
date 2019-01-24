@@ -29,15 +29,6 @@ namespace Uotb.Api.Controllers
             return await _queryDispatcher.Dispatch<GetAllStudents.Query, List<StudentDto>>(new GetAllStudents.Query());
         }
 
-        [HttpGet("student/{id}")]
-        public async Task<Student> GetStudent(int id)
-        {
-            return await _queryDispatcher.Dispatch<GetStudent.Query, Student>(new GetStudent.Query
-            {
-                id = id
-            });
-        }
-
         [HttpGet("student/{id}/marks")]
         public async Task<List<MarkDto>> GetMarks(int id)
         {

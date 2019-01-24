@@ -37,7 +37,7 @@ namespace Uotb.Application.Students.Queries
                 await _context.Entry(s).Collection(x => x.StudentClasses).LoadAsync();
                 await _context.Entry(s).Collection(x => x.StudentFaculties).LoadAsync();
 
-
+                
 
                 return s;
             }
